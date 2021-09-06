@@ -1,0 +1,62 @@
+import logging
+
+import requests
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.core.serializers import serialize
+from django.http import HttpResponse, HttpRequest, JsonResponse, HttpResponseRedirect
+# Create your views here.
+from django.shortcuts import redirect
+
+logger = logging.getLogger(__name__)
+
+auth_url_discord = "https://discord.com/api/oauth2/authorize?client_id=884012002463346689" \
+                   "&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Foauth2%2Flogin%2Fredirect" \
+                   "&response_type=code&scope=identify"
+
+
+def home(request: HttpRequest) -> HttpResponse:
+    return JsonResponse({"home": "Welcome to Oauth2"})
+
+
+@login_required(login_url="/oauth2/login")
+def get_authenticated_user(request: HttpRequest) -> HttpResponse:
+    logger.info(request.user)
+
+    return JsonResponse({"user": serialize('json', [request.user, ], ensure_ascii=False)[1:-1]})
+
+
+def discord_login(request: HttpRequest) -> HttpResponseRedirect:
+    return redirect(auth_url_discord)
+
+
+def discord_redirect(request: HttpRequest) -> HttpResponse:
+    code = request.GET.get('code')
+    logger.info("code: " + code)
+    res = get_exchange_code(code=code)
+    user = get_usr_info(res.get("access_token"))
+    users = list(authenticate(request, user=user))
+    login(request, users[0])
+    return redirect("/oauth2/user")
+
+
+def get_exchange_code(code: str) -> dict:
+    data = {
+        "client_id": "884012002463346689",
+        "client_secret": "EeKXc-ccFBlUC2w58fCIeqMiNExElPOg",
+        "grant_type": "authorization_code",
+        "code": code,
+        "redirect_uri": "http://localhost:8000/oauth2/login/redirect",
+        "scope": "identify"
+    }
+    headers = {"Content-Type": "application/x-www-form-urlencoded"}
+    response = requests.post("https://discord.com/api/oauth2/token", data=data, headers=headers)
+    return response.json()
+
+
+def get_usr_info(token: str) -> dict:
+    res = requests.get("https://discord.com/api/v6/users/@me",
+                       headers={"Authorization": "Bearer " + token})
+    logger.info(res.json())
+    user = res.json()
+    return user

@@ -1,0 +1,9 @@
+Django~=3.2.6
+requests~=2.26.0
+opentelemetry-sdk
+opentelemetry-instrumentation-django
+gunicorn
+whitenoise
+brew
+dj-database-url
+psycopg2
