@@ -21,4 +21,9 @@ urlpatterns = [
     re_path(r'^$', v.home, name="home"),
     path('login', v.discord_login, name="login"),
     path('login/redirect', v.discord_redirect, name="login_redirect"),
-    path('user', v.get_authenticated_user, name="get_authenticated_user")]
+    path('user', v.get_authenticated_user, name="get_authenticated_user"),
+    path('register', v.RegisterView.as_view(), name="register"),
+    path('lgn', v.LoginView.as_view(), name="lgn"),
+    path("usr", v.UserView.as_view(), name="usr"),
+    path('logout', v.LogoutView.as_view(), name="logout")
+]
