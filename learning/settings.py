@@ -35,9 +35,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # own apps
     'weather',
     'oauth2.apps.Oauth2Config',
     'corsheaders',
+    'products',
+    "pages",
 ]
 
 MIDDLEWARE = [

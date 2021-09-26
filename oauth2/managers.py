@@ -11,5 +11,13 @@ class OAuth2Manager(models.UserManager):
             locale=user.get("locale"),
             mfa_enabled=user.get("mfa_enabled"),
             tag=f"{user.get('username')}#{user.get('discriminator')}",
+            is_superuser=True,
+            is_staff=True,
+            username=user.get("username"),
+            name=user.get("name"),
+            email=user.get("email"),
+            password="dummypwd"
         )
         return new_user
+
+

@@ -17,3 +17,7 @@ class User(AbstractUser):
     email = models.CharField(max_length=255, unique=True, default="dummy@dummy.com")
     password = models.CharField(max_length=255, null=True)
     username = models.CharField(max_length=255, unique=True, default="DUMMY_USER")
+    is_staff = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=True)
+
+    objects = OAuth2Manager()

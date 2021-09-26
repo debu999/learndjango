@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 from oauth2 import urls
+from pages import urls as p_urls
+from products import urls as pr_urls
 from weather import views as v
 from . import views
 
@@ -24,5 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('i1', v.index1),
-    path("oauth2/", include(urls))
+    path("oauth2/", include(urls)),
+    path("pages/", include(p_urls)),
+    path("products/", include(pr_urls))
 ]

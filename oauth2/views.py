@@ -29,9 +29,8 @@ def home(request: HttpRequest) -> HttpResponse:
 
 @login_required(login_url="/oauth2/login")
 def get_authenticated_user(request: HttpRequest) -> HttpResponse:
-    logger.info(request.user)
-
-    return JsonResponse({"user": serialize('json', [request.user, ], ensure_ascii=False)[1:-1]})
+    logger.info({"user": serialize('json', [request.user, ], ensure_ascii=False)[1:-1]})
+    return redirect('admin:index')
 
 
 def discord_login(request: HttpRequest) -> HttpResponseRedirect:
