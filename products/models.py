@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
@@ -12,3 +13,7 @@ class Product(models.Model):
 
     def __str__(self):
         return f"Product: {self.title}"
+
+    def get_absolute_url(self):
+        return reverse("products:prd_lookup", kwargs={"pid": self.id})
+        # return f"/products/product/{self.id}/"

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p><strong>{{ article.id }} - {{ article.title|upper }}<br/></strong>
+        {% if article.content != None and article.content != '' %}
+            {{ article.content }}
+        {% else %}Content coming soon ...
+        {% endif %}
+        <br/>
+        active : {{ article.active }}<br/>
+        link: <a href="../../blog/">Go To List of Articles...</a>
+    </p>
+
+{% endblock %}

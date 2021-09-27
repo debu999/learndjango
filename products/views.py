@@ -76,3 +76,9 @@ def product_delete_view(request, pid, *args, **kwargs):
     # obj = Product.objects.filter(id=pid).first()
     context = {"product": obj}
     return render(request, "product_delete.html", context)
+
+
+def product_list_view(request, *args, **kwargs):
+    queryset = Product.objects.all()
+    context = {"product_list": queryset}
+    return render(request, "product_list.html", context)

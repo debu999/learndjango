@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{% url 'articles:article_create_view'%}">Create Article</a>
+    {% for art in article_list %}
+        <p><strong>{{ art.id }} - {{ art.title|upper }}<br/></strong>
+            {% if art.content != None and art.content != '' %}
+                {{ art.content }}
+            {% else %}Content coming soon ...
+            {% endif %}
+            <br/>
+            active : {{ art.active }}<br/>
+            link: <a href="{{ art.get_absolute_url }}">{{ art.title }}</a>&nbsp;
+            <a href="{% url 'articles:article_update_view' id=art.id %}">Update</a>&nbsp;
+            <a href="{% url 'articles:article_delete_view' id=art.id %}">Delete</a>
+        </p>
+
+    {% endfor %}
+{% endblock %}

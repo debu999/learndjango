@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from blog import urls as blog_urls
 from oauth2 import urls
 from pages import urls as p_urls
 from products import urls as pr_urls
@@ -28,5 +29,6 @@ urlpatterns = [
     path('i1', v.index1),
     path("oauth2/", include(urls)),
     path("pages/", include(p_urls)),
-    path("products/", include(pr_urls))
+    path("products/", include(pr_urls)),
+    path("blog/", include(blog_urls))
 ]

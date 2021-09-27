@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Products:</h1>
-    {% for p in products %}
+    {% for p in product_list %}
         <p><strong>{{ p.id }} - {{ p.title|upper }}<br/></strong>
             {% if p.description != None and p.description != '' %}
                 {{ p.description }}
@@ -12,7 +11,8 @@
             price : {{ p.price }}<br/>
             summary: {{ p.summary }}<br/>
             featured: {{ p.featured }}<br/>
-            link: <a href="../../products">Go To List of Products...</a>
+            link: <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>
         </p>
+
     {% endfor %}
 {% endblock %}
